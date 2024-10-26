@@ -12,16 +12,14 @@ type FileUploaderProps = {
 };
 
 export const FileUploader = ({ files, onChange }: FileUploaderProps) => {
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    onChange(acceptedFiles);
-  }, []);
-
-  const { getRootProps, getInputProps } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop: useCallback((acceptedFiles: File[]) => onChange(acceptedFiles), [onChange]),
+  });
 
   return (
     <div {...getRootProps()} className="file-upload">
       <input {...getInputProps()} />
-      {files && files?.length > 0 ? (
+      {files && files.length > 0 ? (
         <Image
           src={convertFileToUrl(files[0])}
           width={1000}
@@ -42,12 +40,10 @@ export const FileUploader = ({ files, onChange }: FileUploaderProps) => {
               <span className="text-green-500">Click to upload </span>
               or drag and drop
             </p>
-            <p className="text-12-regular">
-               PNG or JPG  (max. 300MB)
-            </p>
+            <p className="text-12-regular">PNG or JPG (max. 300MB)</p>
           </div>
         </>
       )}
     </div>
   );
-};                                           
+};
