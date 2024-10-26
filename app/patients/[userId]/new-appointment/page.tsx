@@ -1,10 +1,13 @@
 import Image from "next/image";
-
-import AppointmentForm  from "@/components/Forms/AppointmentForm";
+import { useState } from "react"; // Import useState
+import AppointmentForm from "@/components/Forms/AppointmentForm";
 import { getPatient } from "@/lib/actions/patient.actions";
 
 const Appointment = async ({ params: { userId } }: SearchParamProps) => {
   const patient = await getPatient(userId);
+  
+  // Create a state variable to manage the open state
+  const [open, setOpen] = useState(true); // Assuming you want it to be open by default
 
   return (
     <div className="flex h-screen max-h-screen">
@@ -22,6 +25,7 @@ const Appointment = async ({ params: { userId } }: SearchParamProps) => {
             patientId={patient?.$id}
             userId={userId}
             type="create"
+            setOpen={setOpen} // Pass the setOpen function
           />
 
           <p className="copyright mt-10 py-12">© 2024 CarePluse</p>
