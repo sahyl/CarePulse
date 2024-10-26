@@ -51,7 +51,7 @@ const AppointmentForm = ({
 
   async function onSubmit(values: z.infer<typeof AppointmentFormValidation>) {
     setIsLoading(true);
-    let status = type === "schedule" ? "scheduled" : type === "cancel" ? "cancelled" : "pending";
+    const status = type === "schedule" ? "scheduled" : type === "cancel" ? "cancelled" : "pending";
     
     try {
       if (type === "create" && patientId) {
